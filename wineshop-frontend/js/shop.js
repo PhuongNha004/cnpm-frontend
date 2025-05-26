@@ -1,7 +1,7 @@
 // Cấu hình chung
 // Cấu hình chung
 const CONFIG = {
-    API_BASE_URL: 'https://congnghephanmem.onrender.com/api/product', // URL backend API mới
+    API_BASE_URL: 'https://congnghephanmem-wj83.onrender.com/api/product', // URL backend API mới
     CURRENCY_SYMBOL: '$',
     DEFAULT_BRAND_LABEL: 'none'
 };
