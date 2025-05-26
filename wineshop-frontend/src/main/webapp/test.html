@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Product Fetch Test</title>
+</head>
+<body>
+<h1>Danh sách sản phẩm</h1>
+<ul id="productList"></ul>
+
+<!--script>
+    fetch('http://localhost:8081/api/product/getAllProduct')
+        .then(response => {
+            if (!response.ok) throw new Error('Lỗi khi gọi API');
+            return response.json();
+        })
+        .then(data => {
+            const list = document.getElementById('productList');
+            data.forEach(product => {
+                const li = document.createElement('li');
+                li.textContent = product.name + ' - ' + product.price;
+                list.appendChild(li);
+            });
+        })
+        .catch(error => {
+            console.error('Chi tiết lỗi:', error);
+        });
+</script>-->
+<script>
+    fetch('http://localhost:8081/api/product/getAllProduct')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Lỗi khi gọi API');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const container = document.getElementById('productContainer');
+
+            data.forEach(product => {
+                const html = `
+                    <div class="col-md-6 col-lg-6 col-xl-4">
+                        <div class="rounded position-relative fruite-item">
+                            <div class="fruite-img">
+                                <img src="${product.image}" class="img-fluid w-100 rounded-top" alt="">
+                            </div>
+                            <div class="text-white bg-secondary px-3 py-1 rounded position-absolute"
+                                 style="top: 10px; left: 10px;">${product.category}
+                            </div>
+                            <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                <h4>${product.name}</h4>
+                                <p>${product.description}</p>
+                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                    <p class="text-dark fs-5 fw-bold mb-0">$${product.price} / kg</p>
+                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary">
+                                        <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += html;
+            });
+        })
+        .catch(error => {
+            console.error('Chi tiết lỗi:', error);
+        });
+</script>
+
+</body>
+</html>
