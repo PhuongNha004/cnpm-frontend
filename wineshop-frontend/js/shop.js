@@ -1,9 +1,11 @@
 // Cấu hình chung
+// Cấu hình chung
 const CONFIG = {
-    API_BASE_URL: 'http://localhost:8081/api/product', // URL backend API
+    API_BASE_URL: 'https://congnghephanmem.onrender.com/api/product', // URL backend API mới
     CURRENCY_SYMBOL: '$',
     DEFAULT_BRAND_LABEL: 'none'
 };
+
 
 // Class quản lý trạng thái ứng dụng (AppState)
 // 2.2 Cập nhật trạng thái bộ lọc (brand, alcohol, maxPrice)
