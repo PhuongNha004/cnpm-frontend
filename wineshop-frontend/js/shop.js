@@ -195,7 +195,19 @@ class FilterService {
                 ApiService.getBrands(),    // Lấy danh sách thương hiệu
                 ApiService.getAlcohols()   // Lấy danh sách nồng độ cồn
             ]);
-            UIComponents.brands.render(brands);           // Render filter brand
+            UIComponents.brands.render = function (brands) {
+                const html = brands.map(name => `
+        <li>
+            <div class="d-flex justify-content-between fruite-name">
+                <a href="#" class="${state.selectedBrand === name ? 'active' : ''}">
+                    <i class="fas fa-wine-bottle me-2 text-primary"></i>${name}
+                </a>
+            </div>
+        </li>
+    `).join('');
+                $('#brands').html(html);
+            };
+            // Render filter brand
             UIComponents.concentrations.render(alcohols); // Render filter alcohol
         } catch (error) {
             console.error('Lỗi khi tải dữ liệu bộ lọc:', error);
@@ -253,3 +265,26 @@ class EventHandlers {
 
 // Khi trang được tải xong, khởi tạo toàn bộ (2.14 vòng lặp khi thay đổi filter nhiều lần)
 $(document).ready(() => EventHandlers.init());
+
+// Reset bộ lọc về mặc định khi bấm nút reload
+$('#resetFilters').on('click', function (e) {
+    e.preventDefault();
+
+    // Reset trạng thái AppState
+    state.selectedBrand = null;
+    state.selectedAlcohol = null;
+    state.selectedMaxPrice = state.maxPrice;
+
+    // Reset UI: slider, brand highlight, checkbox
+    $('#rangeInput').val(state.maxPrice);
+    UIComponents.priceSlider.update(state.maxPrice);
+
+    // Bỏ chọn brand
+    $('#brands a').removeClass('active');
+
+    // Bỏ chọn tất cả checkbox
+    $('#concentrations input[type=checkbox]').prop('checked', false);
+
+    // Gọi lại API lọc sản phẩm với filter mặc định
+    FilterService.apply();
+});
