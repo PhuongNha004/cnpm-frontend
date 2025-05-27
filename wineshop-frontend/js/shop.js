@@ -195,19 +195,21 @@ class FilterService {
                 ApiService.getBrands(),    // Lấy danh sách thương hiệu
                 ApiService.getAlcohols()   // Lấy danh sách nồng độ cồn
             ]);
+            // Định nghĩa lại hàm render cho brands
             UIComponents.brands.render = function (brands) {
                 const html = brands.map(name => `
-        <li>
-            <div class="d-flex justify-content-between fruite-name">
-                <a href="#" class="${state.selectedBrand === name ? 'active' : ''}">
-                    <i class="fas fa-wine-bottle me-2 text-primary"></i>${name}
-                </a>
-            </div>
-        </li>
-    `).join('');
+                <li>
+                    <div class="d-flex justify-content-between fruite-name">
+                        <a href="#" class="${state.selectedBrand === name ? 'active' : ''}">
+                            <i class="fas fa-wine-bottle me-2 text-primary"></i>${name}
+                        </a>
+                    </div>
+                </li>
+            `).join('');
                 $('#brands').html(html);
             };
-            // Render filter brand
+            // Gọi hàm render để hiển thị danh sách thương hiệu
+            UIComponents.brands.render(brands); // Thêm dòng này
             UIComponents.concentrations.render(alcohols); // Render filter alcohol
         } catch (error) {
             console.error('Lỗi khi tải dữ liệu bộ lọc:', error);
